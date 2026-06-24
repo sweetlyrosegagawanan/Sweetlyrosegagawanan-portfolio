@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sweetly Rose Gagawanan | Property Manager & Real Estate VA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:        #09071a;
+      --dark2:       #0f0c1e;
+      --dark-card:   #16102e;
+      --purple:      #7c3aed;
+      --purple-dark: #4c1d95;
+      --purple-soft: #a78bfa;
+      --gold:        #f59e0b;
+      --gold-dark:   #d97706;
+      --sky:         #06b6d4;
+      --white:       #ffffff;
+      --off:         #fafafa;
+      --lavender:    #f5f0ff;
+      --text:        #1e1b4b;
+      --body:        #374151;
+      --muted:       #6b7280;
+      --light:       #e2e8f0;
+      --border:      #e5e7eb;
+      --card:        #ffffff;
+      --section-alt: #f8f5ff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--white);
+      color: var(--body);
+      line-height: 1.6;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* ── CUSTOM CURSOR ─────────────────────────── */
+    #cursor {
+      width: 12px; height: 12px;
+      background: var(--purple);
+      border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: transform .1s, width .2s, height .2s, background .2s;
+      mix-blend-mode: normal;
+    }
+    #cursor-ring {
+      width: 36px; height: 36px;
+      border: 2px solid rgba(124,58,237,.5);
+      border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 99998;
+      transform: translate(-50%, -50%);
+      transition: transform .15s ease-out, width .2s, height .2s, border-color .2s;
+    }
+    body.cursor-hover #cursor { width: 20px; height: 20px; background: var(--gold); }
+    body.cursor-hover #cursor-ring { width: 50px; height: 50px; border-color: var(--gold); }
+
+    /* ── NAV ───────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0 2.5rem;
+      height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background .3s, box-shadow .3s, backdrop-filter .3s;
+    }
+    nav.scrolled {
+      background: rgba(9,7,26,.92);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(124,58,237,.2);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem; font-weight: 800;
+      background: linear-gradient(90deg, #a78bfa, var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a {
+      color: #c4b5fd; font-size: .85rem; font-weight: 500;
+      text-decoration: none; letter-spacing: .3px;
+      position: relative; transition: color .2s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 2px; background: var(--gold);
+      transform: scaleX(0); transform-origin: right;
+      transition: transform .25s ease;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); transform-origin: left; }
+    .nav-links a.active { color: var(--white); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple)) !important;
+      color: var(--white) !important;
+      padding: .5rem 1.4rem; border-radius: 999px;
+      font-weight: 700 !important; font-size: .82rem !important;
+      box-shadow: 0 4px 14px rgba(124,58,237,.4);
+      transition: transform .2s, box-shadow .2s !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { transform: translateY(-2px) !important; box-shadow: 0 6px 20px rgba(124,58,237,.6) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: .3s; }
+
+    /* ── HERO ──────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background: var(--dark);
+      display: flex; align-items: center;
+      padding: 7rem 2.5rem 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-particles {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .hero-particles span {
+      position: absolute; border-radius: 50%;
+      background: rgba(124,58,237,.35);
+      animation: float linear infinite;
+    }
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: .4; }
+      100% { transform: translateY(-20px) scale(1); opacity: 0; }
+    }
+    .hero-glow {
+      position: absolute; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(124,58,237,.2) 0%, transparent 65%);
+      top: 50%; right: 5%; transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1150px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr auto; gap: 5rem; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: rgba(124,58,237,.15); border: 1px solid rgba(124,58,237,.35);
+      color: #c4b5fd; padding: .45rem 1.1rem; border-radius: 999px;
+      font-size: .78rem; font-weight: 600; letter-spacing: .8px; text-transform: uppercase;
+      margin-bottom: 1.6rem; width: fit-content;
+    }
+    .badge-dot { width: 7px; height: 7px; background: #4ade80; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 4.5vw, 4rem);
+      line-height: 1.12; margin-bottom: 1.25rem;
+      color: var(--white);
+    }
+    .hero-text h1 .grad {
+      background: linear-gradient(90deg, #c4b5fd 0%, var(--gold) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-typed {
+      color: #94a3b8; font-size: 1rem; line-height: 1.75;
+      max-width: 500px; margin-bottom: 2.5rem; min-height: 3.5em;
+    }
+    .typed-cursor { color: var(--purple-soft); animation: blink .8s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .hero-stats { display: flex; gap: 2.5rem; margin-bottom: 3rem; }
+    .h-stat { }
+    .h-stat-num {
+      font-size: 2.2rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, #c4b5fd, var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .h-stat-label { font-size: .72rem; color: #6b7280; font-weight: 600; text-transform: uppercase; letter-spacing: .6px; margin-top: .2rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+      color: var(--white); padding: .9rem 2rem; border-radius: 999px;
+      font-weight: 700; font-size: .9rem; text-decoration: none;
+      box-shadow: 0 6px 20px rgba(124,58,237,.45);
+      transition: transform .2s, box-shadow .2s;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.15), transparent);
+      opacity: 0; transition: opacity .2s;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(124,58,237,.6); }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: transparent; color: #c4b5fd;
+      padding: .9rem 2rem; border-radius: 999px;
+      font-weight: 600; font-size: .9rem; text-decoration: none;
+      border: 1.5px solid rgba(167,139,250,.35);
+      transition: border-color .2s, background .2s, transform .2s, color .2s;
+    }
+    .btn-secondary:hover { border-color: #a78bfa; background: rgba(124,58,237,.1); color: var(--white); transform: translateY(-2px); }
+
+    /* ── PHOTO BLOCK ───────────────────────────── */
+    .hero-photo-wrap {
+      position: relative; width: 360px; flex-shrink: 0;
+    }
+    .photo-ring {
+      width: 320px; height: 320px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple-dark), var(--gold), var(--purple));
+      padding: 4px;
+      position: relative; margin: 0 auto;
+    }
+    .photo-ring-inner {
+      width: 100%; height: 100%; border-radius: 50%;
+      overflow: hidden; background: var(--dark);
+    }
+    .photo-ring-inner img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top;
+      display: block;
+    }
+    .photo-glow {
+      position: absolute; inset: -20px;
+      background: radial-gradient(circle, rgba(124,58,237,.3), transparent 65%);
+      border-radius: 50%; z-index: -1;
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%,100% { opacity: .6; transform: scale(1); }
+      50%      { opacity: 1; transform: scale(1.08); }
+    }
+    .float-badge {
+      position: absolute; background: rgba(22,16,46,.9);
+      border: 1px solid rgba(124,58,237,.4);
+      backdrop-filter: blur(10px);
+      border-radius: 14px; padding: .55rem 1rem;
+      display: flex; align-items: center; gap: .5rem;
+      color: var(--white); font-size: .75rem; font-weight: 600;
+      white-space: nowrap;
+      animation: bob 3s ease-in-out infinite;
+      box-shadow: 0 8px 24px rgba(0,0,0,.4);
+    }
+    .float-badge .fb-icon { font-size: 1rem; }
+    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    .fb-1 { top: 0; right: -20px; animation-delay: 0s; }
+    .fb-2 { bottom: 60px; right: -30px; animation-delay: .6s; }
+    .fb-3 { bottom: 10px; left: -20px; animation-delay: 1.2s; }
+    .fb-4 { top: 60px; left: -30px; animation-delay: 1.8s; }
+
+    /* ── SECTION COMMONS ───────────────────────── */
+    section { padding: 6rem 2.5rem; }
+    .container { max-width: 1150px; margin: 0 auto; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: .5rem;
+      color: var(--purple); font-size: .75rem; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: .75rem;
+    }
+    .section-label::before { content: ''; width: 24px; height: 2px; background: currentColor; border-radius: 2px; }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3vw, 2.6rem); color: var(--text); line-height: 1.2; margin-bottom: 1rem;
+    }
+    .section-title .accent {
+      background: linear-gradient(90deg, var(--purple), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .section-desc { color: var(--muted); font-size: .975rem; max-width: 520px; line-height: 1.75; }
+
+    /* ── ABOUT ─────────────────────────────────── */
+    #about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-text p { color: var(--body); line-height: 1.85; font-size: .975rem; margin-bottom: 1.25rem; }
+    .about-chips { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.75rem; }
+    .chip {
+      background: var(--lavender); color: var(--purple-dark);
+      border: 1px solid rgba(124,58,237,.18); border-radius: 999px;
+      padding: .35rem .9rem; font-size: .76rem; font-weight: 600;
+      transition: background .2s, color .2s, transform .2s;
+      cursor: default;
+    }
+    .chip:hover { background: var(--purple); color: var(--white); transform: translateY(-2px); }
+    .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .metric-flip {
+      perspective: 600px; height: 160px; cursor: pointer;
+    }
+    .metric-flip-inner {
+      width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform .6s ease;
+      position: relative;
+    }
+    .metric-flip:hover .metric-flip-inner { transform: rotateY(180deg); }
+    .metric-front, .metric-back {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      border-radius: 16px; padding: 1.5rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+    }
+    .metric-front {
+      background: var(--white); border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .metric-back {
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+      transform: rotateY(180deg);
+    }
+    .metric-icon { font-size: 1.8rem; margin-bottom: .5rem; }
+    .metric-num { font-size: 2.2rem; font-weight: 900; color: var(--purple); line-height: 1; }
+    .metric-label { font-size: .78rem; color: var(--muted); font-weight: 600; margin-top: .3rem; }
+    .metric-back p { color: rgba(255,255,255,.9); font-size: .82rem; line-height: 1.55; }
+    .metric-back .mb-title { color: var(--white); font-weight: 700; font-size: .88rem; margin-bottom: .4rem; }
+
+    /* ── SERVICES ──────────────────────────────── */
+    #services { background: var(--section-alt); }
+    .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+    .svc-card {
+      background: var(--white); border: 1px solid rgba(124,58,237,.12);
+      border-radius: 20px; padding: 2rem 1.75rem;
+      transition: transform .08s ease-out, box-shadow .08s ease-out, border-color .2s;
+      position: relative; overflow: hidden;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .svc-card::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(124,58,237,.05), rgba(245,158,11,.04));
+      opacity: 0; transition: opacity .3s; border-radius: 20px;
+    }
+    .svc-card:hover { border-color: rgba(124,58,237,.3); box-shadow: 0 20px 50px rgba(76,29,149,.15); }
+    .svc-card:hover::after { opacity: 1; }
+    .svc-icon-wrap {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: linear-gradient(135deg, rgba(124,58,237,.15), rgba(124,58,237,.06));
+      border: 1px solid rgba(124,58,237,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 1.25rem;
+      transition: transform .2s;
+    }
+    .svc-card:hover .svc-icon-wrap { transform: scale(1.1) translateZ(20px); }
+    .svc-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .6rem; }
+    .svc-card > p { color: var(--muted); font-size: .85rem; line-height: 1.65; margin-bottom: 1rem; }
+    .svc-list { list-style: none; }
+    .svc-list li {
+      color: var(--body); font-size: .82rem; padding: .28rem 0;
+      display: flex; gap: .5rem; align-items: flex-start;
+    }
+    .svc-list li::before { content: '✦'; color: var(--purple); font-size: .6rem; flex-shrink: 0; margin-top: .3rem; }
+    .svc-num {
+      position: absolute; top: 1.5rem; right: 1.75rem;
+      font-size: 3.5rem; font-weight: 900; line-height: 1;
+      color: rgba(124,58,237,.06);
+      font-family: 'Playfair Display', serif;
+      transition: color .3s;
+    }
+    .svc-card:hover .svc-num { color: rgba(124,58,237,.12); }
+
+    /* ── EXPERIENCE ────────────────────────────── */
+    #experience { background: var(--white); }
+    .exp-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; }
+    .exp-sticky { position: sticky; top: 100px; align-self: start; }
+    .timeline { position: relative; }
+    .tl-line {
+      position: absolute; left: 10px; top: 8px; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--purple), var(--gold), transparent);
+      border-radius: 2px;
+    }
+    .exp-item { position: relative; padding-left: 42px; padding-bottom: 2.25rem; }
+    .exp-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      position: absolute; left: 3px; top: 6px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--white); border: 3px solid var(--purple);
+      transition: background .2s, border-color .2s, transform .2s;
+      z-index: 1;
+    }
+    .exp-item:hover .tl-dot { background: var(--purple); transform: scale(1.3); }
+    .exp-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.5rem 1.75rem;
+      transition: box-shadow .25s, border-color .25s, transform .25s;
+    }
+    .exp-item:hover .exp-card { box-shadow: 0 8px 30px rgba(76,29,149,.1); border-color: rgba(124,58,237,.25); transform: translateX(4px); }
+    .exp-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: .5rem; }
+    .exp-title { font-size: .95rem; font-weight: 700; color: var(--text); }
+    .exp-period {
+      background: var(--lavender); color: var(--purple);
+      border-radius: 999px; padding: .22rem .75rem;
+      font-size: .7rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+    }
+    .exp-company { color: var(--purple); font-weight: 600; font-size: .85rem; margin-bottom: .75rem; }
+    .exp-pts { list-style: none; }
+    .exp-pts li {
+      color: var(--body); font-size: .83rem; line-height: 1.6;
+      padding: .22rem 0; display: flex; gap: .5rem;
+    }
+    .exp-pts li::before { content: '→'; color: var(--purple-soft); flex-shrink: 0; }
+
+    /* ── TOOLS ─────────────────────────────────── */
+    #tools { background: var(--dark); padding: 6rem 2.5rem; }
+    #tools .section-title { color: var(--white); }
+    #tools .section-label { color: var(--gold); }
+    #tools .section-label::before { background: var(--gold); }
+    #tools .section-desc { color: #94a3b8; }
+    .tools-cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+    .tool-cat {
+      background: rgba(255,255,255,.04); border: 1px solid rgba(124,58,237,.2);
+      border-radius: 18px; padding: 1.75rem;
+      transition: background .2s, border-color .2s, transform .2s;
+    }
+    .tool-cat:hover { background: rgba(124,58,237,.08); border-color: rgba(124,58,237,.4); transform: translateY(-4px); }
+    .tc-header {
+      display: flex; align-items: center; gap: .75rem;
+      margin-bottom: 1.25rem;
+    }
+    .tc-icon { font-size: 1.4rem; }
+    .tc-name { color: var(--white); font-size: .85rem; font-weight: 700; }
+    .tool-pills { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .tool-pill {
+      background: rgba(255,255,255,.07); color: #c4b5fd;
+      border: 1px solid rgba(124,58,237,.2); border-radius: 8px;
+      padding: .32rem .8rem; font-size: .76rem; font-weight: 500;
+      transition: background .2s, color .2s, border-color .2s, transform .15s;
+    }
+    .tool-pill:hover { background: var(--purple); color: var(--white); border-color: var(--purple); transform: translateY(-2px); }
+
+    /* ── WHY ME ────────────────────────────────── */
+    #why { background: var(--section-alt); }
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+    .why-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2rem 1.75rem;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      position: relative;
+    }
+    .why-card::before {
+      content: ''; position: absolute; top: 0; left: 2rem; right: 2rem;
+      height: 3px; border-radius: 0 0 4px 4px;
+      background: linear-gradient(90deg, var(--purple), var(--gold));
+      transform: scaleX(0); transform-origin: left; transition: transform .3s;
+    }
+    .why-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(76,29,149,.12); border-color: rgba(124,58,237,.2); }
+    .why-card:hover::before { transform: scaleX(1); }
+    .why-icon {
+      width: 54px; height: 54px; border-radius: 14px;
+      background: linear-gradient(135deg, rgba(124,58,237,.12), rgba(245,158,11,.08));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 1.25rem;
+      border: 1px solid rgba(124,58,237,.15);
+    }
+    .why-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .6rem; }
+    .why-card p { color: var(--muted); font-size: .875rem; line-height: 1.7; }
+
+    /* ── TESTIMONIAL PLACEHOLDER ───────────────── */
+    #social { background: var(--dark2); padding: 5rem 2.5rem; }
+    .social-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+    #social .section-title { color: var(--white); }
+    #social .section-label { color: var(--purple-soft); justify-content: center; }
+    #social .section-label::before { background: var(--purple-soft); }
+    .social-quote {
+      background: rgba(255,255,255,.04); border: 1px solid rgba(124,58,237,.2);
+      border-radius: 20px; padding: 2.5rem; margin-top: 3rem;
+      position: relative;
+    }
+    .social-quote::before {
+      content: '"'; position: absolute; top: 1rem; left: 2rem;
+      font-family: 'Playfair Display', serif; font-size: 5rem;
+      color: rgba(124,58,237,.2); line-height: 1;
+    }
+    .social-quote p { color: #c4b5fd; font-size: 1.05rem; line-height: 1.8; font-style: italic; margin-bottom: 1.5rem; }
+    .sq-author { display: flex; align-items: center; gap: 1rem; justify-content: center; }
+    .sq-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: var(--white); font-size: .9rem;
+    }
+    .sq-name { color: var(--white); font-weight: 700; font-size: .9rem; }
+    .sq-role { color: #6b7280; font-size: .8rem; }
+    .social-links { display: flex; gap: 1rem; justify-content: center; margin-top: 2.5rem; flex-wrap: wrap; }
+    .social-link {
+      display: flex; align-items: center; gap: .6rem;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(124,58,237,.2);
+      color: #c4b5fd; padding: .6rem 1.4rem; border-radius: 999px;
+      font-size: .82rem; font-weight: 600; text-decoration: none;
+      transition: background .2s, color .2s, transform .2s, border-color .2s;
+    }
+    .social-link:hover { background: var(--purple); color: var(--white); border-color: var(--purple); transform: translateY(-2px); }
+
+    /* ── CONTACT ───────────────────────────────── */
+    #contact { background: var(--white); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 4rem; margin-top: 3.5rem; align-items: start; }
+    .contact-info-head h3 { font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: .5rem; }
+    .contact-info-head p { color: var(--muted); font-size: .9rem; line-height: 1.7; margin-bottom: 2rem; }
+    .cinfo-item {
+      display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .cinfo-icon {
+      width: 46px; height: 46px; flex-shrink: 0; border-radius: 12px;
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; box-shadow: 0 4px 12px rgba(124,58,237,.3);
+    }
+    .cinfo-text strong { display: block; color: var(--text); font-weight: 700; font-size: .87rem; margin-bottom: .1rem; }
+    .cinfo-text span, .cinfo-text a { color: var(--muted); font-size: .84rem; text-decoration: none; }
+    .cinfo-text a:hover { color: var(--purple); }
+    .contact-form-wrap {
+      background: linear-gradient(135deg, #faf7ff, var(--white));
+      border: 1px solid rgba(124,58,237,.15);
+      border-radius: 24px; padding: 2.5rem;
+      box-shadow: 0 10px 40px rgba(76,29,149,.08);
+    }
+    .form-title { font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 1.5rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .fg { margin-bottom: 1.1rem; }
+    .fg label { display: block; font-size: .78rem; font-weight: 700; color: var(--text); margin-bottom: .4rem; letter-spacing: .3px; }
+    .fg input, .fg textarea, .fg select {
+      width: 100%; padding: .75rem 1rem;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-family: 'Inter', sans-serif; font-size: .88rem; color: var(--text);
+      background: var(--white); outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .fg input:focus, .fg textarea:focus, .fg select:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(124,58,237,.12);
+    }
+    .fg textarea { resize: vertical; min-height: 110px; }
+    .btn-send {
+      width: 100%; background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+      color: var(--white); border: none; padding: .95rem;
+      border-radius: 12px; font-family: 'Inter', sans-serif;
+      font-size: .95rem; font-weight: 700; cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 6px 20px rgba(124,58,237,.35);
+      position: relative; overflow: hidden;
+    }
+    .btn-send:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(124,58,237,.5); }
+    .btn-send.success { background: linear-gradient(135deg, #065f46, #059669); box-shadow: 0 6px 20px rgba(5,150,105,.35); }
+
+    /* Ripple */
+    .ripple {
+      position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,.3);
+      transform: scale(0);
+      animation: ripple-anim .6s linear;
+      pointer-events: none;
+    }
+    @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      background: var(--dark); padding: 2.5rem;
+      border-top: 1px solid rgba(124,58,237,.15);
+    }
+    .footer-inner {
+      max-width: 1150px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-left { }
+    .footer-logo {
+      font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700;
+      background: linear-gradient(90deg, #a78bfa, var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-decoration: none; display: block; margin-bottom: .25rem;
+    }
+    .footer-tagline { color: #4b5563; font-size: .78rem; }
+    .footer-right { color: #4b5563; font-size: .8rem; text-align: right; }
+    .footer-right a { color: var(--purple-soft); text-decoration: none; }
+
+    /* ── SCROLL REVEAL ─────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .65s cubic-bezier(.22,1,.36,1), transform .65s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.up { transform: translateY(28px); }
+    .reveal.left { transform: translateX(-28px); }
+    .reveal.right { transform: translateX(28px); }
+    .reveal.visible { opacity: 1; transform: none !important; }
+
+    /* ── RESPONSIVE ────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero-inner { gap: 3rem; }
+      .hero-photo-wrap { width: 300px; }
+      .photo-ring { width: 270px; height: 270px; }
+      .exp-layout { grid-template-columns: 1fr; }
+      .exp-sticky { position: static; }
+      .tools-cats { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column; position: absolute;
+        top: 70px; left: 0; right: 0;
+        background: rgba(9,7,26,.97); backdrop-filter: blur(16px);
+        padding: 1.5rem 2.5rem; gap: 1.25rem;
+        border-bottom: 1px solid rgba(124,58,237,.2);
+      }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-badge { margin-left: auto; margin-right: auto; }
+      .hero-stats { justify-content: center; }
+      .hero-btns { justify-content: center; }
+      .hero-typed { margin-left: auto; margin-right: auto; }
+      .hero-photo-wrap { margin: 0 auto; }
+      .about-grid { grid-template-columns: 1fr; }
+      .svc-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 580px) {
+      section { padding: 4.5rem 1.5rem; }
+      .svc-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .tools-cats { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.75rem; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .photo-ring { width: 240px; height: 240px; }
+      .hero-photo-wrap { width: 260px; }
+      .float-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Sweetly Rose</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me ✦</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner container">
+    <div class="hero-text reveal left">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Available for Remote Work
+      </div>
+      <h1>
+        Property Manager<br />
+        <span class="grad">&amp; Real Estate VA</span><br />
+        Open to US Client Roles
+      </h1>
+      <p class="hero-typed" id="heroTyped"><span class="typed-text"></span><span class="typed-cursor">|</span></p>
+      <div class="hero-stats">
+        <div class="h-stat">
+          <div class="h-stat-num counter" data-target="9">0</div>
+          <div class="h-stat-label">Years+ Experience</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-num counter" data-target="10">0</div>
+          <div class="h-stat-label">Clients Served</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-num counter" data-target="30">0</div>
+          <div class="h-stat-label">Tools Mastered</div>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary ripple-btn">Work With Me ✦</a>
+        <a href="#services" class="btn-secondary ripple-btn">View Services →</a>
+      </div>
+    </div>
+
+    <div class="hero-photo-wrap reveal right">
+      <div class="photo-glow"></div>
+      <div class="photo-ring">
+        <div class="photo-ring-inner">
+          <img src="profile.jpg" alt="Sweetly Rose Gagawanan" />
+        </div>
+      </div>
+      <div class="float-badge fb-1"><span class="fb-icon">🏠</span>Property Manager</div>
+      <div class="float-badge fb-2"><span class="fb-icon">📝</span>Transaction Coord.</div>
+      <div class="float-badge fb-3"><span class="fb-icon">📋</span>Leasing Expert</div>
+      <div class="float-badge fb-4"><span class="fb-icon">⚡</span>9+ Yrs Remote</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal left">
+        <span class="section-label">About Me</span>
+        <h2 class="section-title">Accurate. Reliable.<br /><span class="accent">Remotely Ready</span><br />for US Client Roles.</h2>
+        <p>I'm Sweetly Rose Gagawanan, a Property Manager and Real Estate Virtual Assistant based in Quezon City, Philippines, with 9+ years managing tenant leasing, rent collection, regulatory compliance, and transaction coordination in fast-paced remote environments.</p>
+        <p>Skilled in AppFolio, Buildium, Salesforce, HubSpot, and CRM/workflow automation tools, I keep property operations and teams running smoothly — whether it's full-cycle property management, leasing, or executive administrative support.</p>
+        <p>Known for accuracy, reliability, and clear communication, I'm open to remote roles and US client engagements where precision and proactive ownership make a real difference.</p>
+        <div class="about-chips">
+          <span class="chip">Full-Cycle Property Management</span>
+          <span class="chip">Tenant Onboarding &amp; Leasing</span>
+          <span class="chip">Lease Administration &amp; Renewals</span>
+          <span class="chip">Rent Collection &amp; Delinquency</span>
+          <span class="chip">Section 8 &amp; PHA Coordination</span>
+          <span class="chip">Eviction Support</span>
+          <span class="chip">Rental License &amp; Compliance</span>
+          <span class="chip">Property Insurance Oversight</span>
+          <span class="chip">Vendor &amp; Maintenance Coordination</span>
+          <span class="chip">Transaction Coordination</span>
+          <span class="chip">Contract &amp; Closing Documentation</span>
+          <span class="chip">Listing Management &amp; MLS</span>
+          <span class="chip">CRM Management</span>
+          <span class="chip">SOP &amp; Workflow Automation</span>
+          <span class="chip">Bookkeeping &amp; Expense Reconciliation</span>
+        </div>
+      </div>
+      <div class="metrics-grid reveal right">
+        <div class="metric-flip hover-trigger">
+          <div class="metric-flip-inner">
+            <div class="metric-front">
+              <div class="metric-icon">🏠</div>
+              <div class="metric-num counter" data-target="100">0</div>
+              <div class="metric-label">Properties Managed</div>
+            </div>
+            <div class="metric-back">
+              <div class="mb-title">Property Operations</div>
+              <p>Full-cycle management using AppFolio, Buildium, PadSplit &amp; more across multiple portfolios.</p>
+            </div>
+          </div>
+        </div>
+        <div class="metric-flip hover-trigger">
+          <div class="metric-flip-inner">
+            <div class="metric-front">
+              <div class="metric-icon">⭐</div>
+              <div class="metric-num"><span class="counter" data-target="95">0</span>%</div>
+              <div class="metric-label">Client Satisfaction</div>
+            </div>
+            <div class="metric-back">
+              <div class="mb-title">CSAT Excellence</div>
+              <p>Consistently achieving top satisfaction scores across dental, Airbnb, and VA client work.</p>
+            </div>
+          </div>
+        </div>
+        <div class="metric-flip hover-trigger">
+          <div class="metric-flip-inner">
+            <div class="metric-front">
+              <div class="metric-icon">📋</div>
+              <div class="metric-num counter" data-target="100">0</div>
+              <div class="metric-label">QA Audits / Week</div>
+            </div>
+            <div class="metric-back">
+              <div class="mb-title">Quality Assurance</div>
+              <p>Audited 100+ interactions weekly at Movate, elevating agent quality scores by 15%.</p>
+            </div>
+          </div>
+        </div>
+        <div class="metric-flip hover-trigger">
+          <div class="metric-flip-inner">
+            <div class="metric-front">
+              <div class="metric-icon">⚡</div>
+              <div class="metric-num"><span class="counter" data-target="30">0</span>%</div>
+              <div class="metric-label">Reporting Time Saved</div>
+            </div>
+            <div class="metric-back">
+              <div class="mb-title">Automation Impact</div>
+              <p>Built Google Sheets dashboards with Apps Script that cut manual reporting time by 30%.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+      <span class="section-label">What I Offer</span>
+      <h2 class="section-title">Services Tailored to<br /><span class="accent">Your Business Needs</span></h2>
+      <p class="section-desc">From property compliance to executive operations — comprehensive virtual support that keeps your business moving forward.</p>
+    </div>
+    <div class="svc-grid">
+
+      <div class="svc-card tilt-card reveal">
+        <span class="svc-num">01</span>
+        <div class="svc-icon-wrap">🏢</div>
+        <h3>Property Management VA</h3>
+        <p>End-to-end property operations using AppFolio, Buildium, PadSplit &amp; more.</p>
+        <ul class="svc-list">
+          <li>Tenant onboarding &amp; lease management</li>
+          <li>Rent collection &amp; delinquency follow-up</li>
+          <li>Section 8 &amp; PHA coordination</li>
+          <li>Move-in/out tracking &amp; rent increases</li>
+          <li>Airbnb &amp; PadSplit listing management</li>
+        </ul>
+      </div>
+
+      <div class="svc-card tilt-card reveal">
+        <span class="svc-num">02</span>
+        <div class="svc-icon-wrap">📋</div>
+        <h3>Compliance &amp; Regulatory Support</h3>
+        <p>Keep your portfolio audit-ready and fully compliant with licensing standards.</p>
+        <ul class="svc-list">
+          <li>Rental license renewal &amp; tracking</li>
+          <li>Lead inspection scheduling</li>
+          <li>Property insurance oversight</li>
+          <li>Regulatory document management</li>
+          <li>Eviction support &amp; legal mail handling</li>
+        </ul>
+      </div>
+
+      <div class="svc-card tilt-card reveal">
+        <span class="svc-num">03</span>
+        <div class="svc-icon-wrap">📝</div>
+        <h3>Transaction Coordination</h3>
+        <p>Seamless contract-to-close support keeping every deadline on track.</p>
+        <ul class="svc-list">
+          <li>Contract execution to closing</li>
+          <li>Inspection &amp; appraisal scheduling</li>
+          <li>Contingency deadline tracking</li>
+          <li>MLS updates &amp; addendums</li>
+          <li>SkySlope &amp; Follow Up Boss management</li>
+        </ul>
+      </div>
+
+      <div class="svc-card tilt-card reveal">
+        <span class="svc-num">04</span>
+        <div class="svc-icon-wrap">📊</div>
+        <h3>Executive &amp; Admin Support</h3>
+        <p>High-level administrative assistance so you can focus on growth.</p>
+        <ul class="svc-list">
+          <li>Calendar &amp; inbox management</li>
+          <li>CRM data entry &amp; maintenance</li>
+          <li>Meeting prep &amp; report generation</li>
+          <li>Automated dashboards &amp; tracking</li>
+          <li>Market research &amp; lead generation</li>
+        </ul>
+      </div>
+
+      <div class="svc-card tilt-card reveal">
+        <span class="svc-num">05</span>
+        <div class="svc-icon-wrap">📣</div>
+        <h3>Marketing &amp; Social Media</h3>
+        <p>Strategic content and campaigns to grow your brand and drive occupancy.</p>
+        <ul class="svc-list">
+          <li>Social media content &amp; scheduling</li>
+          <li>Flyers, graphics &amp; video editing</li>
+          <li>Paid ad creative development</li>
+          <li>Digital campaign execution</li>
+          <li>Performance metrics tracking</li>
+        </ul>
+      </div>
+
+      <div class="svc-card tilt-card reveal">
+        <span class="svc-num">06</span>
+        <div class="svc-icon-wrap">✅</div>
+        <h3>Quality Assurance &amp; Process</h3>
+        <p>Systematic auditing and optimization to elevate team performance.</p>
+        <ul class="svc-list">
+          <li>100+ interaction audits per week</li>
+          <li>Performance feedback &amp; coaching</li>
+          <li>SLA &amp; KPI compliance monitoring</li>
+          <li>Trend analysis &amp; insight reports</li>
+          <li>Workflow automation &amp; SOPs</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="exp-layout">
+      <div class="exp-sticky reveal left">
+        <span class="section-label">Work History</span>
+        <h2 class="section-title">9+ Years of<br /><span class="accent">Remote Excellence</span></h2>
+        <p class="section-desc">A consistent track record across real estate, property compliance, QA, and customer experience — fully remote.</p>
+        <div style="margin-top:2rem; padding:1.5rem; background:var(--lavender); border-radius:16px; border:1px solid rgba(124,58,237,.15);">
+          <div style="font-size:.75rem; font-weight:700; color:var(--purple); letter-spacing:1px; text-transform:uppercase; margin-bottom:.75rem;">Education</div>
+          <div style="font-weight:700; color:var(--text); font-size:.9rem;">Associate Degree in Tourism Management</div>
+          <div style="color:var(--muted); font-size:.82rem; margin-top:.25rem;">Montessori Professional College · 2015–2016</div>
+        </div>
+      </div>
+      <div class="timeline reveal right">
+        <div class="tl-line"></div>
+
+        <div class="exp-item">
+          <div class="tl-dot"></div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div>
+                <div class="exp-title">Property and Compliance Manager</div>
+                <div class="exp-company">FLDProperties Inc.</div>
+              </div>
+              <span class="exp-period">Jun 2024 – Mar 2026</span>
+            </div>
+            <ul class="exp-pts">
+              <li>Managed end-to-end rental license compliance across a multi-unit portfolio, coordinating renewals, lead inspections, and regulatory documentation.</li>
+              <li>Led full-cycle tenant and leasing operations in AppFolio — onboarding, lease signings, renewals, rent increases, and move-in tracking.</li>
+              <li>Directed Section 8 rent entry, PHA communications, delinquency management, and eviction support.</li>
+              <li>Maintained accurate financial records through expense categorization, bill entry, and maintenance invoice reconciliation.</li>
+              <li>Administered the PGW Landlord Cooperation Program log and monitored mailbox correspondence three times weekly.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="tl-dot"></div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div>
+                <div class="exp-title">Marketing &amp; Property Manager VA</div>
+                <div class="exp-company">IBANROOMS LLC <span style="font-weight:400;color:var(--muted)">(Part-Time)</span></div>
+              </div>
+              <span class="exp-period">Oct 2025 – Mar 2026</span>
+            </div>
+            <ul class="exp-pts">
+              <li>Oversaw property listings and day-to-day management tasks, including leasing support and occupancy tracking.</li>
+              <li>Managed social media accounts, creating and scheduling content to grow brand presence and engagement.</li>
+              <li>Developed marketing materials including video edits, flyers, and paid ad creatives to drive leads and visibility.</li>
+              <li>Executed digital marketing campaigns and tracked performance metrics to optimize outreach and occupancy rates.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="tl-dot"></div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div>
+                <div class="exp-title">Real Estate VA / Affiliate Assistant</div>
+                <div class="exp-company">BRRRR Invest Academy</div>
+              </div>
+              <span class="exp-period">Mar 2025 – Mar 2026</span>
+            </div>
+            <ul class="exp-pts">
+              <li>Maintained and updated affiliate and property data across CRM platforms, improving data accuracy and cross-team visibility.</li>
+              <li>Built automated tracking sheets and payout dashboards in Google Sheets using Apps Script, reducing manual reporting time by 30%.</li>
+              <li>Provided executive-level admin support — calendar management, inbox triage, meeting preparation, and report generation.</li>
+              <li>Moderated a 3,000+ member Facebook community, boosting engagement and enforcing community standards.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="tl-dot"></div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div>
+                <div class="exp-title">Quality Assurance Specialist</div>
+                <div class="exp-company">Movate</div>
+              </div>
+              <span class="exp-period">Apr 2022 – Jun 2025</span>
+            </div>
+            <ul class="exp-pts">
+              <li>Audited 100+ customer interactions weekly, elevating agent quality scores by 15%.</li>
+              <li>Generated trend analyses and insight reports to improve CSAT and operational efficiency.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="tl-dot"></div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div>
+                <div class="exp-title">Remote Dental Clinic Receptionist</div>
+                <div class="exp-company">Onlinejobs PH</div>
+              </div>
+              <span class="exp-period">Feb 2020 – Aug 2022</span>
+            </div>
+            <ul class="exp-pts">
+              <li>Achieved 95% patient satisfaction; reduced scheduling errors by 20% through workflow redesign.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="tl-dot"></div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div>
+                <div class="exp-title">Property Manager Resolution Expert II – Airbnb</div>
+                <div class="exp-company">TDCX</div>
+              </div>
+              <span class="exp-period">Nov 2020 – Jan 2022</span>
+            </div>
+            <ul class="exp-pts">
+              <li>Resolved disputes, cancellations, and refunds for Airbnb guests/hosts maintaining high CSAT ratings.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <div class="container">
+    <div class="reveal" style="text-align:center; max-width:580px; margin:0 auto;">
+      <span class="section-label">Tech Stack</span>
+      <h2 class="section-title" style="color:var(--white);">Tools &amp; <span style="background:linear-gradient(90deg,#a78bfa,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Technologies</span></h2>
+      <p class="section-desc">30+ tools across real estate, CRM, productivity, and marketing — ready to plug in from day one.</p>
+    </div>
+    <div class="tools-cats">
+      <div class="tool-cat reveal">
+        <div class="tc-header"><span class="tc-icon">🏠</span><span class="tc-name">Property &amp; Real Estate</span></div>
+        <div class="tool-pills">
+          <span class="tool-pill">AppFolio</span><span class="tool-pill">Buildium</span><span class="tool-pill">PadSplit</span>
+          <span class="tool-pill">Rentec</span><span class="tool-pill">Zillow</span><span class="tool-pill">MLS</span>
+          <span class="tool-pill">SkySlope</span><span class="tool-pill">Follow Up Boss</span>
+        </div>
+      </div>
+      <div class="tool-cat reveal">
+        <div class="tc-header"><span class="tc-icon">💼</span><span class="tc-name">CRM &amp; Sales</span></div>
+        <div class="tool-pills">
+          <span class="tool-pill">Salesforce</span><span class="tool-pill">HubSpot</span><span class="tool-pill">GoHighLevel</span>
+        </div>
+      </div>
+      <div class="tool-cat reveal">
+        <div class="tc-header"><span class="tc-icon">📅</span><span class="tc-name">Project Management</span></div>
+        <div class="tool-pills">
+          <span class="tool-pill">Trello</span><span class="tool-pill">Asana</span><span class="tool-pill">GoHighLevel</span>
+        </div>
+      </div>
+      <div class="tool-cat reveal">
+        <div class="tc-header"><span class="tc-icon">⚙️</span><span class="tc-name">Admin &amp; Productivity</span></div>
+        <div class="tool-pills">
+          <span class="tool-pill">Google Workspace</span><span class="tool-pill">Microsoft Office</span>
+          <span class="tool-pill">Typeform</span><span class="tool-pill">Yamm</span>
+          <span class="tool-pill">Google Apps Script</span><span class="tool-pill">Zapier</span>
+        </div>
+      </div>
+      <div class="tool-cat reveal">
+        <div class="tc-header"><span class="tc-icon">💬</span><span class="tc-name">Communication &amp; AI</span></div>
+        <div class="tool-pills">
+          <span class="tool-pill">Zoom</span><span class="tool-pill">Slack</span><span class="tool-pill">WhatsApp</span>
+          <span class="tool-pill">MS Teams</span><span class="tool-pill">Fathom</span>
+          <span class="tool-pill">ChatGPT</span><span class="tool-pill">Gemini</span>
+        </div>
+      </div>
+      <div class="tool-cat reveal">
+        <div class="tc-header"><span class="tc-icon">📈</span><span class="tc-name">Finance &amp; Marketing</span></div>
+        <div class="tool-pills">
+          <span class="tool-pill">QuickBooks Time</span><span class="tool-pill">Kajabi</span><span class="tool-pill">GoHighLevel</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ME -->
+<section id="why">
+  <div class="container">
+    <div class="reveal" style="text-align:center; max-width:580px; margin:0 auto;">
+      <span class="section-label">Why Choose Me</span>
+      <h2 class="section-title">The Difference a<br /><span class="accent">True Professional Makes</span></h2>
+      <p class="section-desc">I don't just complete tasks — I own them, improve them, and deliver measurable results your business can build on.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon">🎯</div>
+        <h3>Precision Under Pressure</h3>
+        <p>Disciplined execution of complex, multi-step workflows under tight deadlines — with zero room for error in compliance-critical environments.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">🔧</div>
+        <h3>Systems &amp; Automation Mindset</h3>
+        <p>I build scalable systems — automated dashboards, SOPs, and workflows — that reduce manual effort and eliminate bottlenecks for your whole team.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">🤝</div>
+        <h3>Clear, Empathetic Communication</h3>
+        <p>Whether it's a PHA rep, landlord, or tenant — I communicate with the clarity and empathy that builds trust and resolves issues fast.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">📚</div>
+        <h3>Rapid Tool Adoption</h3>
+        <p>Strong aptitude for quickly mastering new platforms and applying feedback, with 30+ tools already in my active toolkit across real estate and ops.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">🌏</div>
+        <h3>Fully Remote-Ready</h3>
+        <p>9+ years of proven remote delivery across time zones, using async-first communication, structured documentation, and self-managed workflows.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">📊</div>
+        <h3>Data-Driven Results</h3>
+        <p>From 30% reporting time savings to 15% quality score improvements — I track outcomes and continuously optimize for measurable business impact.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section id="social">
+  <div class="container">
+    <div class="social-inner">
+      <span class="section-label">Reputation</span>
+      <h2 class="section-title" style="color:var(--white);">Trusted by Clients &amp;<br /><span style="background:linear-gradient(90deg,#a78bfa,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Teams Across the US</span></h2>
+      <div class="social-quote reveal">
+        <p>Sweetly Rose is exactly the kind of VA every property manager needs. She understood our compliance requirements from day one and handled everything — from rental license renewals to PHA communication — with zero hand-holding. Incredibly reliable and proactive.</p>
+        <div class="sq-author">
+          <div class="sq-avatar">FL</div>
+          <div>
+            <div class="sq-name">FLDProperties Inc.</div>
+            <div class="sq-role">Property Management Client · Philadelphia, PA</div>
+          </div>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="mailto:sweetlyrosegagawanan@gmail.com" class="social-link">📧 Email Me</a>
+        <a href="https://wa.me/639682764232" class="social-link" target="_blank" rel="noopener">💬 WhatsApp</a>
+        <a href="https://www.linkedin.com" class="social-link" target="_blank" rel="noopener">💼 LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="reveal" style="text-align:center; max-width:540px; margin:0 auto;">
+      <span class="section-label">Get In Touch</span>
+      <h2 class="section-title">Ready to Work<br /><span class="accent">Together?</span></h2>
+      <p class="section-desc">Let's talk about your needs. I'm open to remote roles and new client opportunities across all time zones.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal left">
+        <div class="contact-info-head">
+          <h3>Let's Connect</h3>
+          <p>Reach out via any channel below. I typically respond within 24 hours.</p>
+        </div>
+        <div class="cinfo-item">
+          <div class="cinfo-icon">📧</div>
+          <div class="cinfo-text">
+            <strong>Email</strong>
+            <a href="mailto:sweetlyrosegagawanan@gmail.com">sweetlyrosegagawanan@gmail.com</a>
+          </div>
+        </div>
+        <div class="cinfo-item">
+          <div class="cinfo-icon">📱</div>
+          <div class="cinfo-text">
+            <strong>Phone / WhatsApp</strong>
+            <a href="tel:+639682764232">+63 968 276 4232</a>
+          </div>
+        </div>
+        <div class="cinfo-item">
+          <div class="cinfo-icon">📍</div>
+          <div class="cinfo-text">
+            <strong>Location</strong>
+            <span>Quezon City, Philippines — Remote Worldwide</span>
+          </div>
+        </div>
+        <div class="cinfo-item">
+          <div class="cinfo-icon">⏰</div>
+          <div class="cinfo-text">
+            <strong>Availability</strong>
+            <span>Flexible — US, AU &amp; PH time zones welcome</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap reveal right">
+        <div class="form-title">Send Me a Message ✦</div>
+        <form id="contactForm">
+          <!-- Web3Forms hidden fields — DO NOT remove -->
+          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+          <input type="hidden" name="subject" value="New VA Inquiry — Portfolio Website" />
+          <input type="hidden" name="from_name" value="Sweetly Rose Portfolio" />
+          <input type="hidden" name="redirect" value="false" />
+          <div class="form-row">
+            <div class="fg"><label>First Name</label><input type="text" name="first_name" placeholder="Your first name" required /></div>
+            <div class="fg"><label>Last Name</label><input type="text" name="last_name" placeholder="Your last name" required /></div>
+          </div>
+          <div class="fg"><label>Email Address</label><input type="email" id="fEmail" name="email" placeholder="your@email.com" required /></div>
+          <div class="fg">
+            <label>Service Needed</label>
+            <select id="fService" name="service">
+              <option value="">Choose a service...</option>
+              <option>Property Management VA</option>
+              <option>Compliance &amp; Regulatory Support</option>
+              <option>Transaction Coordination</option>
+              <option>Executive &amp; Administrative Support</option>
+              <option>Marketing &amp; Social Media</option>
+              <option>Quality Assurance &amp; Process Improvement</option>
+              <option>Multiple / Other</option>
+            </select>
+          </div>
+          <div class="fg"><label>Message</label><textarea id="fMsg" name="message" placeholder="Tell me about your project, needs, and timeline..." required></textarea></div>
+          <button type="submit" class="btn-send ripple-btn" id="sendBtn">Send Message ✦</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="#hero" class="footer-logo">Sweetly Rose Gagawanan</a>
+      <div class="footer-tagline">Property Manager · Real Estate VA · Leasing &amp; Transaction Coordinator · Executive Support Specialist</div>
+    </div>
+    <div class="footer-right">
+      <div>© 2026 Sweetly Rose Gagawanan. All rights reserved.</div>
+      <div style="margin-top:.25rem;"><a href="mailto:sweetlyrosegagawanan@gmail.com">sweetlyrosegagawanan@gmail.com</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CUSTOM CURSOR ──────────────────────────────────
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = -100, my = -100, rx = -100, ry = -100;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function animCursor() {
+  rx += (mx - rx) * .15; ry += (my - ry) * .15;
+  cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+})();
+document.querySelectorAll('a, button, .chip, .tool-pill, .metric-flip, .svc-card, .why-card, .tilt-card')
+  .forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+
+// ── NAV SCROLL ────────────────────────────────────
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+  // Active link
+  document.querySelectorAll('section[id]').forEach(sec => {
+    const link = document.querySelector(`.nav-links a[href="#${sec.id}"]`);
+    if (!link) return;
+    const inView = window.scrollY >= sec.offsetTop - 100 && window.scrollY < sec.offsetTop + sec.offsetHeight - 100;
+    link.classList.toggle('active', inView);
+  });
+});
+
+// ── MOBILE NAV ────────────────────────────────────
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+document.getElementById('hamburger').addEventListener('click', toggleNav);
+document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => {
+  document.getElementById('navLinks').classList.remove('open');
+}));
+
+// ── PARTICLES ────────────────────────────────────
+const pContainer = document.getElementById('particles');
+for (let i = 0; i < 18; i++) {
+  const s = document.createElement('span');
+  const size = Math.random() * 6 + 2;
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%;
+    animation-duration:${Math.random()*12+8}s;
+    animation-delay:${Math.random()*10}s;
+    opacity:${Math.random()*.5+.1};
+  `;
+  pContainer.appendChild(s);
+}
+
+// ── TYPEWRITER ───────────────────────────────────
+const phrases = [
+  'Property Manager & Real Estate VA — open to remote US client roles.',
+  'Full-cycle leasing, rent collection, compliance & transaction coordination.',
+  'Keeping your tenants happy, your books clean, and your deadlines met — every time.',
+  'Skilled in AppFolio, Buildium, Salesforce, HubSpot & CRM automation tools.',
+];
+let pi = 0, ci = 0, del = false;
+const typedEl = document.querySelector('.typed-text');
+function typeLoop() {
+  const phrase = phrases[pi];
+  if (!del) {
+    typedEl.textContent = phrase.slice(0, ++ci);
+    if (ci === phrase.length) { del = true; setTimeout(typeLoop, 2200); return; }
+  } else {
+    typedEl.textContent = phrase.slice(0, --ci);
+    if (ci === 0) { del = false; pi = (pi + 1) % phrases.length; setTimeout(typeLoop, 400); return; }
+  }
+  setTimeout(typeLoop, del ? 28 : 42);
+}
+typeLoop();
+
+// ── COUNTER ──────────────────────────────────────
+function animateCount(el) {
+  if (el.dataset.done) return;
+  el.dataset.done = '1';
+  const target = +el.dataset.target;
+  const duration = 1600;
+  const start = performance.now();
+  function step(ts) {
+    const p = Math.min((ts - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.floor(ease * target);
+    if (p < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  }
+  requestAnimationFrame(step);
+}
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.querySelectorAll('.counter').forEach(animateCount);
+  });
+}, { threshold: .4 });
+document.querySelectorAll('.hero-stats, .metrics-grid').forEach(el => counterObs.observe(el));
+
+// ── SCROLL REVEAL ────────────────────────────────
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      revObs.unobserve(e.target);
+    }
+  });
+}, { threshold: .1 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+// ── 3D TILT ──────────────────────────────────────
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - .5;
+    const y = (e.clientY - r.top)  / r.height - .5;
+    card.style.transform = `rotateY(${x * 12}deg) rotateX(${-y * 10}deg) translateZ(12px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'rotateY(0) rotateX(0) translateZ(0)';
+    card.style.transition = 'transform .5s ease';
+    setTimeout(() => card.style.transition = '', 500);
+  });
+  card.addEventListener('mouseenter', () => card.style.transition = 'transform .08s ease-out');
+});
+
+// ── RIPPLE ───────────────────────────────────────
+document.querySelectorAll('.ripple-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const r = btn.getBoundingClientRect();
+    const rip = document.createElement('span');
+    rip.className = 'ripple';
+    const size = Math.max(r.width, r.height) * 1.5;
+    rip.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${e.clientX - r.left - size/2}px;
+      top:${e.clientY - r.top  - size/2}px;
+    `;
+    btn.appendChild(rip);
+    rip.addEventListener('animationend', () => rip.remove());
+  });
+});
+
+// ── CONTACT FORM (Web3Forms — real email delivery) ──
+document.getElementById('contactForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn  = document.getElementById('sendBtn');
+  const orig = btn.textContent;
+
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  const formData = new FormData(e.target);
+  const payload  = JSON.stringify(Object.fromEntries(formData));
+
+  try {
+    const res  = await fetch('https://api.web3forms.com/submit', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body:    payload
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      btn.textContent = '✓ Message Sent!';
+      btn.classList.add('success');
+      e.target.reset();
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('success');
+        btn.disabled = false;
+      }, 4500);
+    } else {
+      throw new Error(data.message || 'Submission failed');
+    }
+  } catch (err) {
+    btn.textContent = '⚠ Error — Please Try Again';
+    btn.style.background = 'linear-gradient(135deg,#991b1b,#dc2626)';
+    btn.disabled = false;
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+    }, 4000);
+  }
+});
+
+// ── PARALLAX HERO ─────────────────────────────────
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  const hero = document.getElementById('hero');
+  if (y < window.innerHeight) {
+    hero.style.backgroundPositionY = `${y * .4}px`;
+  }
+});
+</script>
+</body>
+</html>
